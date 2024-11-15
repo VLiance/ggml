@@ -1,0 +1,39 @@
+-{vFlag}=""
+>
+-{out}=out/{_sPlatform}_{_sConfig_Type}_{_sOpt}
+-{obj}=obj/{_sPlatform}_{_sConfig_Type}_{_sOpt}
+-{pIclude}=../include/ 
+-{pSrc}=../src/ 
+-{pExample}=../examples/simple/ 
+>
+-{vIncl}=
+   -I {pIclude}
+   -I {pSrc}
+>
+;Build Engine
+-c  &{pSrc} -o {obj}/
+   -{vIncl} -{vOS_Flag}
+>
+;Build Engine
+-c  {pSrc}ggml-cpu/ -o {obj}/ggml-cpu/ 
+   -{vIncl} -{vOS_Flag}
+   -I {pSrc}ggml-cpu/
+   -D_WIN32_WINNT=0x0600
+>
+
+;Build example
+-c  {pExample}/simple-backend.cpp -o {obj}/example/simple-backend.o
+   -{vIncl} -{vOS_Flag}
+>
+;Generate Dynamic Lib
+;-o obj/{sOut}/lib/ -#To Lib/{sOut}/Chipmunk.{_sDynamic}
+>
+;Generate Static Lib
+;-o obj/{sOut}/lib/ -#To Lib/{sOut}/libChipmunk.a
+>
+;Generate executable
+-o {obj}/ -#To {out}/App.*
+   {vOS_FlagLink}
+>
+-#Run
+
